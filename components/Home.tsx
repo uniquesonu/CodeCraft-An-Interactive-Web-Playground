@@ -109,13 +109,13 @@ const Homes = () => {
           <>
             <motion.div layout className={`flex ${isHorizontalLayout ? 'h-1/2' : 'w-3/5'} ${isHorizontalLayout ? 'flex-row' : 'flex-col'}`}>
               <motion.div layout className={`flex ${isHorizontalLayout ? 'w-1/3' : 'h-1/3'}`}>
-                <CodeEditor language="html" value={html} onChange={setHtml} theme={isDarkTheme ? 'vs-dark' : 'light'} />
+                <CodeEditor language="html" value={html} onChange={(value) => setHtml(value || '')} theme={isDarkTheme ? 'vs-dark' : 'light'} />
               </motion.div>
               <motion.div layout className={`flex ${isHorizontalLayout ? 'w-1/3' : 'h-1/3'}`}>
-                <CodeEditor language="css" value={css} onChange={setCss} theme={isDarkTheme ? 'vs-dark' : 'light'} />
+                <CodeEditor language="css" value={css} onChange={(value) => setCss(value || '')} theme={isDarkTheme ? 'vs-dark' : 'light'} />
               </motion.div>
               <motion.div layout className={`flex ${isHorizontalLayout ? 'w-1/3' : 'h-1/3'}`}>
-                <CodeEditor language="javascript" value={js} onChange={setJs} theme={isDarkTheme ? 'vs-dark' : 'light'} />
+                <CodeEditor language="javascript" value={js} onChange={(value) => setJs(value || '')} theme={isDarkTheme ? 'vs-dark' : 'light'} />
               </motion.div>
             </motion.div>
             <motion.div layout className={isHorizontalLayout ? 'h-1/2' : 'w-2/5'}>
@@ -125,7 +125,7 @@ const Homes = () => {
         ) : (
           <>
             <motion.div layout className={`flex ${isHorizontalLayout ? 'h-1/2' : 'w-1/2'}`}>
-              <CppEditor value={cpp} onChange={setCpp} theme={isDarkTheme ? 'vs-dark' : 'light'} />
+              <CppEditor value={cpp} onChange={(value) => setCpp(value || '')} theme={isDarkTheme ? 'vs-dark' : 'light'} />
             </motion.div>
             <motion.div layout className={isHorizontalLayout ? 'h-1/2' : 'w-1/2'}>
               <Terminal key={runCount} output={cppOutput} theme={isDarkTheme ? 'dark' : 'light'} />
