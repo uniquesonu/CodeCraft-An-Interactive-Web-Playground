@@ -7,7 +7,7 @@ interface TerminalProps {
 
 const Terminal: React.FC<TerminalProps> = ({ output, theme }) => {
   return (
-    <div className={`h-full p-4 font-mono text-sm overflow-auto ${
+    <div className={`h-full p-4 font-mono text-sm overflow-auto rounded-md ${
       theme === 'dark' ? 'bg-black text-green-400' : 'bg-white text-black border border-gray-300'
     }`}>
       <pre>{output}</pre>
