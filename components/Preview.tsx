@@ -27,7 +27,7 @@ const Preview = ({ files, theme }: { files: any, theme: string }) => {
         theme === 'dark' ? 'border-gray-700' : 'border-gray-300'
       }`}>
         <SandpackProvider files={files} theme={theme} template="static" className="!h-full !overflow-x-auto">
-          <div className={`${showConsole ? 'h-2/3' : 'h-full'}`}>
+        <div className={`${showConsole ? 'h-2/3' : 'h-full'}`}>
             <SandpackPreview className="!w-full !h-full" />
           </div>
           {showConsole && (
