@@ -1,10 +1,11 @@
-"use client";
+"use client"
 import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 import CodeEditor from './CodeEditor';
 import CppEditor from './CppEditor';
 import Preview from './Preview';
 import Terminal from './Terminal';
-import { Layout, Sun, Moon, Play } from 'lucide-react';
+import { Layout, Sun, Moon, Play, Code, FileText, Cpu } from 'lucide-react';
 
 const Homes = () => {
   const [html, setHtml] = useState('<h1>Hello, CodeCraft-An-Interactive-Web-Playground!</h1>');
@@ -34,13 +35,8 @@ const Homes = () => {
     },
   };
 
-  const toggleLayout = () => {
-    setIsHorizontalLayout(!isHorizontalLayout);
-  };
-
-  const toggleTheme = () => {
-    setIsDarkTheme(!isDarkTheme);
-  };
+  const toggleLayout = () => setIsHorizontalLayout(!isHorizontalLayout);
+  const toggleTheme = () => setIsDarkTheme(!isDarkTheme);
 
   const runCppCode = () => {
     setRunCount(prevCount => prevCount + 1);
@@ -51,72 +47,93 @@ const Homes = () => {
   };
 
   return (
-    <div className={`flex flex-col h-screen overflow-hidden ${isDarkTheme ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
-      <div className="flex justify-between p-2 space-x-2">
-        <select
-          value={selectedLanguage}
-          onChange={(e) => setSelectedLanguage(e.target.value)}
-          className={`p-2 rounded-md ${isDarkTheme ? 'bg-gray-700 text-white' : 'bg-gray-200 text-black'}`}
-        >
-          <option value="web">Web (HTML/CSS/JS)</option>
-          <option value="cpp">C++</option>
-        </select>
-        <div className="flex space-x-2">
-          {selectedLanguage === 'cpp' && (
-            <button
-              onClick={runCppCode}
-              className={`p-2 rounded-md ${isDarkTheme ? 'bg-green-700 hover:bg-green-600' : 'bg-green-500 hover:bg-green-400'}`}
-              title="Run C++ Code"
-            >
-              <Play size={20} />
-            </button>
-          )}
-          <button
+    <motion.div 
+      initial={{ opacity: 0 }} 
+      animate={{ opacity: 1 }} 
+      transition={{ duration: 0.5 }}
+      className={`flex flex-col h-screen overflow-hidden ${isDarkTheme ? 'bg-gray-900 text-white' : 'bg-gray-100 text-black'}`}
+    >
+      <nav className="flex justify-between items-center p-4 bg-opacity-90 backdrop-filter backdrop-blur-lg">
+        <h1 className="text-2xl font-bold">CodeCraft</h1>
+        <div className="flex space-x-4">
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() => setSelectedLanguage('web')}
+            className={`p-2 rounded-md ${selectedLanguage === 'web' ? (isDarkTheme ? 'bg-blue-600' : 'bg-blue-500') : (isDarkTheme ? 'bg-gray-700' : 'bg-gray-300')}`}
+          >
+            <span className='flex gap-2 items-center justify-center'><Code size={20} /> Web</span>
+          </motion.button>
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() => setSelectedLanguage('cpp')}
+            className={`p-2 rounded-md ${selectedLanguage === 'cpp' ? (isDarkTheme ? 'bg-green-600' : 'bg-green-500') : (isDarkTheme ? 'bg-gray-700' : 'bg-gray-300')}`}
+          >
+            <span className='flex gap-2 items-center justify-center'><FileText size={20} /> CPP</span>
+
+          </motion.button>
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
             onClick={toggleLayout}
-            className={`p-2 rounded-md ${isDarkTheme ? 'bg-gray-700 hover:bg-gray-600' : 'bg-gray-200 hover:bg-gray-300'}`}
-            title="Toggle Layout"
+            className={`p-2 rounded-md ${isDarkTheme ? 'bg-gray-700 hover:bg-gray-600' : 'bg-gray-300 hover:bg-gray-400'}`}
           >
             <Layout size={20} />
-          </button>
-          <button
+          </motion.button>
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
             onClick={toggleTheme}
-            className={`p-2 rounded-md ${isDarkTheme ? 'bg-gray-700 hover:bg-gray-600' : 'bg-gray-200 hover:bg-gray-300'}`}
-            title="Toggle Theme"
+            className={`p-2 rounded-md ${isDarkTheme ? 'bg-gray-700 hover:bg-gray-600' : 'bg-gray-300 hover:bg-gray-400'}`}
           >
             {isDarkTheme ? <Sun size={20} /> : <Moon size={20} />}
-          </button>
+          </motion.button>
+          {selectedLanguage === 'cpp' && (
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={runCppCode}
+              className={`p-2 rounded-md ${isDarkTheme ? 'bg-green-600 hover:bg-green-500' : 'bg-green-500 hover:bg-green-400'}`}
+            >
+              <Play size={20} />
+            </motion.button>
+          )}
         </div>
-      </div>
-      <div className={`flex flex-grow ${isHorizontalLayout ? 'flex-col' : 'flex-row'}`}>
+      </nav>
+      <motion.div 
+        layout
+        className={`flex flex-grow ${isHorizontalLayout ? 'flex-col' : 'flex-row'}`}
+      >
         {selectedLanguage === 'web' ? (
           <>
-            <div className={`flex ${isHorizontalLayout ? 'h-1/2' : 'w-3/5'} ${isHorizontalLayout ? 'flex-row' : 'flex-col'}`}>
-              <div className={`flex ${isHorizontalLayout ? 'w-1/3' : 'h-1/3'}`}>
-                <CodeEditor language="html" value={html} onChange={(value: string | undefined) => setHtml(value || '')} theme={isDarkTheme ? 'vs-dark' : 'light'} />
-              </div>
-              <div className={`flex ${isHorizontalLayout ? 'w-1/3' : 'h-1/3'}`}>
-                <CodeEditor language="css" value={css} onChange={(value: string | undefined) => setCss(value || '')} theme={isDarkTheme ? 'vs-dark' : 'light'} />
-              </div>
-              <div className={`flex ${isHorizontalLayout ? 'w-1/3' : 'h-1/3'}`}>
-                <CodeEditor language="javascript" value={js} onChange={(value: string | undefined) => setJs(value || '')} theme={isDarkTheme ? 'vs-dark' : 'light'} />
-              </div>
-            </div>
-            <div className={isHorizontalLayout ? 'h-1/2' : 'w-2/5'}>
+            <motion.div layout className={`flex ${isHorizontalLayout ? 'h-1/2' : 'w-3/5'} ${isHorizontalLayout ? 'flex-row' : 'flex-col'}`}>
+              <motion.div layout className={`flex ${isHorizontalLayout ? 'w-1/3' : 'h-1/3'}`}>
+                <CodeEditor language="html" value={html} onChange={setHtml} theme={isDarkTheme ? 'vs-dark' : 'light'} />
+              </motion.div>
+              <motion.div layout className={`flex ${isHorizontalLayout ? 'w-1/3' : 'h-1/3'}`}>
+                <CodeEditor language="css" value={css} onChange={setCss} theme={isDarkTheme ? 'vs-dark' : 'light'} />
+              </motion.div>
+              <motion.div layout className={`flex ${isHorizontalLayout ? 'w-1/3' : 'h-1/3'}`}>
+                <CodeEditor language="javascript" value={js} onChange={setJs} theme={isDarkTheme ? 'vs-dark' : 'light'} />
+              </motion.div>
+            </motion.div>
+            <motion.div layout className={isHorizontalLayout ? 'h-1/2' : 'w-2/5'}>
               <Preview files={files} theme={isDarkTheme ? 'dark' : 'light'} />
-            </div>
+            </motion.div>
           </>
         ) : (
           <>
-            <div className={`flex ${isHorizontalLayout ? 'h-1/2' : 'w-1/2'}`}>
-              <CppEditor value={cpp} onChange={(value: string | undefined) => setCpp(value || '')} theme={isDarkTheme ? 'vs-dark' : 'light'} />
-            </div>
-            <div className={isHorizontalLayout ? 'h-1/2' : 'w-1/2'}>
+            <motion.div layout className={`flex ${isHorizontalLayout ? 'h-1/2' : 'w-1/2'}`}>
+              <CppEditor value={cpp} onChange={setCpp} theme={isDarkTheme ? 'vs-dark' : 'light'} />
+            </motion.div>
+            <motion.div layout className={isHorizontalLayout ? 'h-1/2' : 'w-1/2'}>
               <Terminal key={runCount} output={cppOutput} theme={isDarkTheme ? 'dark' : 'light'} />
-            </div>
+            </motion.div>
           </>
         )}
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 };
 
