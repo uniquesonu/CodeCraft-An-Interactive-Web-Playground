@@ -1,9 +1,8 @@
-"use client";
 import React, { useState } from 'react';
 import { SandpackProvider, SandpackPreview, SandpackConsole } from "@codesandbox/sandpack-react";
 import { Terminal } from "lucide-react";
 
-const Preview = ({ files, theme }: { files: any, theme: any }) => {
+const Preview = ({ files, theme }: { files: any, theme: string }) => {
   const [showConsole, setShowConsole] = useState(true);
 
   const toggleConsole = () => {
@@ -11,16 +10,16 @@ const Preview = ({ files, theme }: { files: any, theme: any }) => {
   };
 
   return (
-    <div className={`h-full flex flex-col p-2 ${theme === 'dark' ? 'bg-gray-900' : 'bg-white'}`}>
-      <div className="flex justify-between items-center mb-1">
+    <div className={`h-full flex flex-col p-2 ${theme === 'dark' ? 'bg-gray-800' : 'bg-gray-100'}`}>
+      <div className="flex justify-between items-center mb-2">
         <h2 className={`text-lg font-bold ${theme === 'dark' ? 'text-white' : 'text-black'}`}>Preview</h2>
         <button
           onClick={toggleConsole}
-          className={`px-2 py-1 text-sm rounded-md flex items-center transition-colors ${
-            theme === 'dark' ? 'bg-gray-700 text-white hover:bg-gray-600' : 'bg-gray-200 text-black hover:bg-gray-300'
+          className={`px-3 py-1 text-sm rounded-md flex items-center transition-colors ${
+            theme === 'dark' ? 'bg-gray-700 text-white hover:bg-gray-600' : 'bg-gray-300 text-black hover:bg-gray-400'
           }`}
         >
-          <Terminal size={16} className="mr-1" />
+          <Terminal size={16} className="mr-2" />
           {showConsole ? 'Hide Console' : 'Show Console'}
         </button>
       </div>
