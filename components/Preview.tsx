@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { SandpackProvider, SandpackPreview, SandpackConsole } from "@codesandbox/sandpack-react";
+import { SandpackProvider, SandpackPreview, SandpackConsole, SandpackThemeProp } from "@codesandbox/sandpack-react";
 import { Terminal } from "lucide-react";
 
 const Preview = ({ files, theme }: { files: any, theme: string }) => {
@@ -26,7 +26,7 @@ const Preview = ({ files, theme }: { files: any, theme: string }) => {
       <div className={`flex-grow border rounded-md overflow-hidden flex flex-col ${
         theme === 'dark' ? 'border-gray-700' : 'border-gray-300'
       }`}>
-        <SandpackProvider files={files} theme={theme} template="static" className="!h-full !overflow-x-auto">
+        <SandpackProvider files={files} theme={theme as SandpackThemeProp} template="static" className="!h-full !overflow-x-auto">
         <div className={`${showConsole ? 'h-2/3' : 'h-full'}`}>
             <SandpackPreview className="!w-full !h-full" />
           </div>
